@@ -35,7 +35,7 @@ export interface PhotoRiseProps {
   once?: boolean;
   /** Extra className on the wrapper. */
   className?: string;
-  /** IntersectionObserver margin (e.g. "-60px"). Default `"-40px"`. */
+  /** IntersectionObserver margin (e.g. "-60px"). Default `"0px"`. */
   viewportMargin?: string;
   /** Include subtle scale transition. Default `true`. */
   scale?: boolean;
@@ -80,7 +80,7 @@ export default function PhotoRise({
   trigger = "onEnter",
   once = true,
   className,
-  viewportMargin = "-40px",
+  viewportMargin = "0px",
   scale: useScale = true,
 }: PhotoRiseProps) {
   const prefersReduced = useReducedMotion();
@@ -142,6 +142,7 @@ export default function PhotoRise({
             viewport: {
               once: once && !triggerOnExit,
               margin: viewportMargin,
+              amount: 0.1,
             },
           }
         : { animate: "visible" })}
