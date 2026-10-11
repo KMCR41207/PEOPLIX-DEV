@@ -39,30 +39,15 @@ export default function DevelopersPage({
     setApplyRole(null);
   }, []);
 
-  /* Page reveal — clipPath wipe from bottom to top on initial load */
-  const dur = prefersReduced ? 0 : 1;
+  /* Page reveal — simple opacity fade, no clipPath (avoids layout glitch) */
+  const dur = prefersReduced ? 0 : 0.4;
 
   return (
     <motion.div
       className="min-h-screen bg-white text-black"
-      initial={{
-        clipPath: prefersReduced ? "inset(0 0 0 0)" : "inset(100% 0 0 0)",
-        opacity: prefersReduced ? 1 : 0,
-      }}
-      animate={{
-        clipPath: "inset(0 0 0 0)",
-        opacity: 1,
-      }}
-      transition={{
-        clipPath: {
-          duration: dur * 0.9,
-          ease: [0.22, 1, 0.36, 1],
-        },
-        opacity: {
-          duration: dur * 0.5,
-          ease: "easeOut",
-        },
-      }}
+      initial={{ opacity: prefersReduced ? 1 : 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: dur, ease: "easeOut" }}
     >
       {/* Skip to main content */}
       <a
