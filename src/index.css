@@ -1,0 +1,114 @@
+/**
+ * index.css — Global styles and Tailwind v4 theme
+ * ────────────────────────────────────
+ * Design tokens are scoped under @theme so they can be
+ * cleanly merged into the main site's Tailwind config.
+ */
+
+@import "tailwindcss";
+
+/* ─── Peoplix Developers page design tokens ─── */
+@theme {
+  --color-peoplix-beige: #D9B77A;
+  --font-display: "Inter Tight", "Inter", system-ui, sans-serif;
+}
+
+/* ─── Base resets (scoped, non-destructive) ─── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: #ffffff;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #ffffff;
+    color: #000000;
+  }
+}
+
+/* ─── Accessible focus ring utility ─── */
+@layer utilities {
+  .focus-ring {
+    @apply focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-black;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Apply Modal — Premium split-screen styles
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── Full-screen on mobile ─── */
+@media (max-width: 1023px) {
+  .apply-modal-container {
+    min-height: 100vh;
+    min-height: 100dvh;
+    border-radius: 0 !important;
+    margin: 0 !important;
+  }
+}
+
+/* ─── Button hover treatments ─── */
+.apply-btn-primary {
+  position: relative;
+  overflow: hidden;
+}
+
+.apply-btn-primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.08);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.apply-btn-primary:hover::after {
+  opacity: 1;
+}
+
+.apply-btn-submit {
+  position: relative;
+  overflow: hidden;
+}
+
+.apply-btn-submit:hover {
+  filter: brightness(0.95);
+}
+
+/* ─── Custom scrollbar for the form area ─── */
+.apply-modal-container ::-webkit-scrollbar {
+  width: 4px;
+}
+
+.apply-modal-container ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.apply-modal-container ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.12);
+  border-radius: 2px;
+}
+
+.apply-modal-container ::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* ─── Input number spinner removal ─── */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
