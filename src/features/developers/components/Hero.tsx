@@ -26,7 +26,7 @@ export default function Hero() {
 
   // Mark entrance animation as complete
   useEffect(() => {
-    const t = setTimeout(() => setHasEntered(true), 1200);
+    const t = setTimeout(() => setHasEntered(true), 1600);
     return () => clearTimeout(t);
   }, []);
 
@@ -137,31 +137,6 @@ export default function Hero() {
   }, [hasEntered, isExiting, scrollToRoles, TOTAL_EXIT_MS]);
 
   /* ── Entrance variants ── */
-  const containerVariants = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: prefersReduced ? 0 : 0.04,
-        delayChildren: prefersReduced ? 0 : 0.2,
-      },
-    },
-  };
-
-  const letterEnter = {
-    hidden: {
-      y: prefersReduced ? 0 : "110%",
-      opacity: prefersReduced ? 1 : 0,
-    },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: prefersReduced ? 0 : 0.6,
-        ease: [0.16, 1, 0.3, 1] as const,
-      },
-    },
-  };
-
   const fadeUp = {
     hidden: { y: prefersReduced ? 0 : 24, opacity: prefersReduced ? 1 : 0 },
     visible: {
@@ -210,44 +185,37 @@ export default function Hero() {
           <motion.span
             className="flex w-full justify-between overflow-hidden font-display font-extrabold uppercase leading-[0.85] tracking-[-0.04em] text-black"
             style={{ fontSize: "clamp(2.5rem, 14.5vw, 16vw)" }}
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
             aria-label="Developers"
           >
             {letters.map((letter, i) => (
               <motion.span
                 key={i}
-                variants={letterEnter}
-                className="inline-block"
+                className="inline-block will-change-transform"
                 aria-hidden="true"
+                initial={{ y: prefersReduced ? 0 : "110%", opacity: prefersReduced ? 1 : 0 }}
+                animate={
+                  isExiting
+                    ? {
+                        y: "-100%",
+                        opacity: 0,
+                        transition: {
+                          duration: LETTER_DURATION,
+                          delay: i * STAGGER,
+                          ease: [0.45, 0, 0.55, 1],
+                        },
+                      }
+                    : {
+                        y: "0%",
+                        opacity: 1,
+                        transition: {
+                          duration: prefersReduced ? 0 : 0.6,
+                          delay: prefersReduced ? 0 : 0.2 + i * 0.04,
+                          ease: [0.16, 1, 0.3, 1],
+                        },
+                      }
+                }
               >
-                <motion.span
-                  className="inline-block will-change-transform"
-                  animate={
-                    isExiting
-                      ? {
-                          y: "-100%",
-                          opacity: 0,
-                          transition: {
-                            duration: LETTER_DURATION,
-                            delay: i * STAGGER,
-                            ease: [0.45, 0, 0.55, 1],
-                          },
-                        }
-                      : {
-                          y: "0%",
-                          opacity: 1,
-                          transition: {
-                            duration: 0.25,
-                            delay: i * 0.02,
-                            ease: [0.16, 1, 0.3, 1],
-                          },
-                        }
-                  }
-                >
-                  {letter}
-                </motion.span>
+                {letter}
               </motion.span>
             ))}
           </motion.span>
